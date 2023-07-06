@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  ion-cannon-1:
+    image: seedtaghiring/ion-cannon:v1
+    environment:
+      CANNON_GEN: 1
+    ports:
+      - 3001:3000
+
+  ion-cannon-2:
+    image: seedtaghiring/ion-cannon:v1
+    environment:
+      CANNON_GEN: 2
+    ports:
+      - 3002:3000
+
+  ion-cannon-3:
+    image: seedtaghiring/ion-cannon:v1
+    environment:
+      CANNON_GEN: 3
+    ports:
+      - 3003:3000
+
+  endor:
+    image: myhay/endor-service:latest
+    environment:
+      ENV: "test"
+      ION_CANNON_URL1: "http://ion-cannon-1:3000"
+      ION_CANNON_URL2: "http://ion-cannon-2:3000"
+      ION_CANNON_URL3: "http://ion-cannon-3:3000"
+    ports:
+      - 3000:3000
+    depends_on: # TODO: Add mechanism to check if the endpoints are ready to receive traffic. 
+      - ion-cannon-1
+      - ion-cannon-2
+      - ion-cannon-3
