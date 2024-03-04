@@ -1,4 +1,4 @@
-FROM alpine:3.18.3
+FROM alpine:3.18.6
 
 # Get some basic stuff and remove innecessary apk files
 RUN apk --update upgrade && apk add \
